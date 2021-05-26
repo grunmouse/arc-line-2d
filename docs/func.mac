@@ -1,0 +1,22 @@
+e(i, n) := transpose(matrix(makelist(if j = i then 1 else 0,j, 1, n)));
+O(m, n) := zeromatrix(m, n);
+E(m) := ident(m);
+limdiv(a, b) := if b = 0 then signum(a)*inf else a/b;
+vecdiv(A, b) := genmatrix(lambda ([i, j], limdiv(b[i][1],A[i][1])),length(A),1);
+
+
+getForX(M):=genmatrix(lambda([i,j], M[i+m][j]), m, n+1);
+getForY(M):=genmatrix(lambda([i,j], M[i][j]), m, n+1);
+getForA(M):=genmatrix(lambda([i,j], M[i][j]), m, n);
+getForB(M):=genmatrix(lambda([i,j], M[i][n+1]),m,1);
+
+get(name, i):=map(ev,[concat(name, "_", i)])[1];
+get2(name, i,j):=map(ev,[concat(name, "_", i, "_", j)])[1];
+let(name, i, value):=map(":",[concat(name, "_", i)],[value]);
+let2(name, i, j, value):=map(":",[concat(name, "_", i, "_", j)],[value]);
+
+permute(n, a, b):=genmatrix(lambda([i,j], 
+	if a=i then (if b = j then 1 else 0)
+	else if b=i then (if a = j then 1 else 0)
+	else if i=j then 1 else 0
+), n, n);

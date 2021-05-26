@@ -1,0 +1,23 @@
+/* требуется q, b_0, c_0, d_0 */
+m:q;
+n:q-1;
+A_0:genmatrix(lambda([i,j], if i=j or i-1=j then -1 else 0), m, n);
+X_0:genmatrix(lambda([i,j], concat('s, "_", i)), n, 1);
+Y_0:genmatrix(lambda([i,j], concat('p, "_", i)), m, 1);
+YX_0:addrow(Y_0, X_0, [1]);
+hatA_0:addcol(A_0, b_0);
+hatC_0: addrow(c_0, [d_0]);
+
+calcS(k):=let('S, k, -vecdiv(get('A, k).e(get('hx, k),n), get('b, k)));
+
+calcStep(k):=block([],
+	let2('P, k-1, k, permute(n+m+1, get('hy, k-1), get('hx, k-1) + m)),
+	let('YX, k, get2('P, k-1, k).get('YX, k-1)),
+	let2('NB, k-1, k, get2('P, k-1, k).addrow(get('hatA, k-1), E(n+1))),
+	let2('N, k-1, k, getForY(get2('NB, k-1, k))),
+	let2('B, k-1, k, getForX(get2('NB, k-1, k))),
+	let('hatA, k, get2('N, k-1, k).invert(get2('B, k-1, k))),
+	let('hatC, k, transpose(invert(get2('B, k-1, k))).get('hatC, k-1)),
+	let('A, k, getForA(get('hatA, k))),
+	let('b, k, getForB(get('hatA, k)))
+);
