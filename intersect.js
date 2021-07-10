@@ -64,6 +64,9 @@ function intersectPartAndLine(AB, CD){
 }
 
 function intersectCircle(C1, R1, C2, R2){
+	const X = C2.sub(C1).ort();
+	const Y = X.rotOrto(1);
+	const M = 
 }
 
 module.exports = {

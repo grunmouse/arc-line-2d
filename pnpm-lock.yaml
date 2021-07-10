@@ -1,0 +1,16 @@
+lockfileVersion: 5.3
+
+specifiers:
+  '@grunmouse/math-calc-scheme': link:..\math-calc-scheme
+  yaml: ^1.10.2
+
+dependencies:
+  '@grunmouse/math-calc-scheme': link:../math-calc-scheme
+  yaml: 1.10.2
+
+packages:
+
+  /yaml/1.10.2:
+    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
+    engines: {node: '>= 6'}
+    dev: false
