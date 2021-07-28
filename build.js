@@ -24,9 +24,8 @@
  * @property type 
  * @property stroke? : String - цвет границы
  * @property fill? : String - цвет заливки
- * @property superline? : Array<IFigure>
- * @property close : Boolean - признак замкнутости контура
- * @property repeat-x : 
+ * @property superline? : Array<ISubline>
+ * @property closed : Boolean - признак замкнутости контура
  * 
  * @type Rounded
  * @implements IFigure
@@ -36,6 +35,21 @@
  * @interface IRoundedPoint
  * @imlplements Vector2
  * @property radius : Number
+ *
+ * @interface ISubline
+ * @property stroke? : String - цвет границы
+ * @property fill? : String - цвет заливки
+ * @property closed : Boolean
+ * @property points : Array<Vector2>
+ * @property repeat? : Repeat
+ *
+ * @type Repeat
+ * @property x : Object
+ * @property x.step? : Number
+ * @property x.count? : Number
+ * @property y? : Object
+ * @property y.step? : Number
+ * @property y.count?=1 : Number
  */
 
 
@@ -47,7 +61,6 @@ function buildBody(body){
 	return items;
 }
 
-function repeat
 
 function buildPath(fig){
 	if(fig.type === 'rounded'){
