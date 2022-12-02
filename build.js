@@ -10,8 +10,10 @@
  * @property type : String = "line" | "arc" | "curve" | "move"
  * @property start : Vector2
  * @property fin : Vector2
- * @property points? : Array[4]<Vector2> - точки для типа "arc"
- * @property points? : Array[4]<Vector2>
+ * @property points? : Array[4]<Vector2> - точки для типа "curve"
+ * @property apex? : Vector2 - вершина для типа "arc"
+ * @property radius? : Number - радиус для типа "arc"
+ * @property sign? : {-1; 1} - знак кривизны для типа "arc"
  */
 
 

@@ -45,4 +45,19 @@ function convertArc(params){
 	const polarS = new CalcNode('polarS', (set)=>(set.has('RS') || set.has('R') && set.has('aS')), {RS, R, aS});
 	
 	
+	const paramMap = {
+		apex:A,
+		start:S,
+		center:C,
+		fin:F,
+		startAngle:aS,
+		finAngle:aF,
+		radius:R
+	};
+	for(let key in params){
+		let v = paramMap[key];
+		if(v){
+			v.asSource();
+		}
+	}
 }

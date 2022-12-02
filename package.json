@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@grunmouse/math-calc-scheme": "link:..\\math-calc-scheme",
+    "@grunmouse/math-vector": "link:..\\math-vector",
     "yaml": "^1.10.2"
   }
 }
