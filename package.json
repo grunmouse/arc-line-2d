@@ -14,6 +14,7 @@
   "dependencies": {
     "@grunmouse/math-calc-scheme": "link:..\\math-calc-scheme",
     "@grunmouse/math-vector": "link:..\\math-vector",
+    "@grunmouse/multioperator": "link:..\\multioperator",
     "yaml": "^1.10.2"
   }
 }

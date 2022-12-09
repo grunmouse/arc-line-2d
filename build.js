@@ -43,15 +43,6 @@
  * @property fill? : String - цвет заливки
  * @property closed : Boolean
  * @property points : Array<Vector2>
- * @property repeat? : Repeat
- *
- * @type Repeat
- * @property x : Object
- * @property x.step? : Number
- * @property x.count? : Number
- * @property y? : Object
- * @property y.step? : Number
- * @property y.count?=1 : Number
  */
 
 
@@ -70,5 +61,3 @@ function buildPath(fig){
 	if(fig.superline){
 	}
 }
-
-function build(f
