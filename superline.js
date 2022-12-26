@@ -1,19 +1,20 @@
-/*
-P1 = A
-P2 = (- 5A + 18B — 9C + 2D) / 6
-P3 = ( 2A — 9B + 18C — 5D) / 6
-P4 = D
-*/
 
 const {Vector3, Vector2, Vector} = require('@grunmouse/math-vector');
 const {SquareMatrix2} = require('@grunmouse/math-matrix');
 
 const {
 	isoradial,
-	deltoid,
-	intersectLine,
-	intersectPartAndLine
-} = require('./polyline.js');
+	deltoid
+} = require('./geometry/deltoid.js');
+
+const {
+	Line,
+	Circle,
+	Part,
+	Arc,
+	intersect
+} = require('./geometry/primitives.js');
+
 
 const defsepdir = new Vector2(0, 1);
 
@@ -24,8 +25,8 @@ function AbstractSegment(attributes){
 	const x1 = x0 + length;
 	const P0 = new Vector2(x0,0);
 	const P1 = new Vector2(x1,0);
-	const line0 = [P0, P0.add(dir0)];
-	const line1 = [P1, P1.add(dir1)];
+	const line0 = new Line(P0, P0.add(dir0));
+	const line1 = new Line(P1, P1.add(dir1));
 	
 	return {
 		...attributes,
@@ -53,7 +54,9 @@ function besierForPoints(A, B, C, D){
 	
 	return [A, P2, P3, D];
 }
-
+/*
+LineSegment({start:prev, fin, startline, endline, x0})
+*/
 function LineSegment(attributes){
 	const {
 		start,
@@ -96,7 +99,9 @@ function LineSegment(attributes){
 		convert
 	});
 }
-
+/*
+ArcSegment({start:prev, fin, center, radius, x0, apex, arct:true});
+*/
 function ArcSegment(attributes){
 	const {
 		start,
@@ -189,15 +194,23 @@ function convertRounded(points){
 				}
 			}
 			addLine(A, endline);
-		}
+		} 
 	}
 	
 	return result;
 }
+//let {P0, P1, dir0, dir1, line0, line1} = seg;
+//seg.radius
+//seg.convert
+//seg.center
+//seg.sign
+//seg.arct
+//seg.x0
+//seg.x1
 
 /**
  * Усекает отрезок пределами сегмента
- * @param AB : Array[2]<Vector2> - исходный отрезок
+ * @param AB : Part - исходный отрезок
  * @param seg : Segment - сегмент
  *
  * @return Object
@@ -257,8 +270,8 @@ function cutLineBySeg(AB, seg){
 		result.empty = true
 	}
 	else{
-		const P = intersectPartAndLine(AB, line0);
-		const Q = intersectPartAndLine(AB, line1);
+		const P = AB.intersect(line0);
+		const Q = AB.intersect(line1);
 		
 		const notP = !P || P.sub(P1).cross(dir1) > 0; //P вне области
 		const notQ = !Q || Q.sub(P0).cross(dir0) < 0; //Q вне области
@@ -315,6 +328,8 @@ function cutLineBySeg(AB, seg){
 	
 	return result;
 }
+
+
 
 /**
  * Преобразует отрезок AB координатах сегмента seg в реальные отрезок или кривую
@@ -399,7 +414,7 @@ function convertLineFrom(AB, segs){
 function convertPolylineFrom(points, segs){
 	let result = [];
 	for(let i=1; i <= points.length; ++i){
-		result.push(convertLineFrom([points[i-1], points[i]], segs));
+		result.push(convertLineFrom(new Part(points[i-1], points[i]), segs));
 	}
 	return result;
 }
